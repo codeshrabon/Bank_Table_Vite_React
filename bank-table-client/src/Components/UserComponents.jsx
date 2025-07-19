@@ -1,24 +1,29 @@
-import React from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-class UserComponents extends React.Component{
-    
-    constructor(props){
-        super(props)
-        this.state = {
-            disbursement_info:[]
-        }
-    }
-    componentDidMount(){
-        UserServises.getAllUsers().then((response) => {
-            this.setState({disbursement_info: response.data})
+const UserComponents = () => {
+    const [userComponents, setUserComponents] = useState([]);
+
+    useEffect (() => {
+        axios.get('http://localhost:8080/api/bank/all')
+        .then(response => {
+            console.log("Fetch data: " , response.data);
+            setUserComponents(response.data);
+        })
+        .catch(error => {
+            console.error("There was an error fetching the data", error);
         });
-    }
-    
-    render(){
-        return(
-            <div>
-                <h1 className="text-center">Bank Table of Client</h1>
-                <table className="table table-striped">
+    },[]);
+    return(
+        <div>
+            <h1>Bank - Table - Client</h1>
+            {/* <ul>
+                {userComponents.map(userComponents => (
+                    <li key={userComponents.id}>{userComponents.account_name}</li>
+
+                ))}
+            </ul> */}
+            <table className="table table-striped">
                     <thead>
                         <tr>
                             <th>Account Name</th>
@@ -39,8 +44,8 @@ class UserComponents extends React.Component{
                             <th>Comment</th>
                         </tr>
                     </thead>
-                    {<tbody>
-                            {this.state.disbursement_info.map((info, index) => (
+                    <tbody>
+                            {userComponents.map((info,index) => (
                                 <tr key={index}>
                                 <td>{info.account_name}</td>
                                 <td>{info.loan_account_number}</td>
@@ -60,16 +65,13 @@ class UserComponents extends React.Component{
                                 <td>{info.comments}</td>
                                 </tr>
                             ))}
-                            </tbody>}
+                            
+                            </tbody>
+                            
 
 
                 </table>
-
-
-
-            </div>
-        );
-    }
+        </div>
+    )
 }
-
-export default new UserComponent();
+export default UserComponents;

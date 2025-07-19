@@ -1,9 +1,10 @@
-import { useState } from "react";
-import BankForm from "./Components/BankForm";
-import UserComponent from "./Components/UserComponent";
-
+import UserComponents from "./Components/UserComponents";
 function App() {
-  <UserComponent />
+
+  <UserComponents />
+  // <Users />
+  // <UserComponent />
+  
   // const [viewForm, setViewForm] = useState('form');
   // const [view, setView] = useState('table');
 
